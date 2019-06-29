@@ -5,9 +5,10 @@ try
     length =length(2);
     TInput = [];
     TTargets =[];
-    treina
-    loadfile
-    if(treina==1 & loadfile==0)
+    savetype=0;
+    resp =strcmp(loadfile,'0');
+   
+    if(treina==1 &&   strcmp(loadfile,'0'))
         net = feedforwardnet(neuroNumber);
         %Setup função de activação das camadas escondidas
         for index=1:length
@@ -18,10 +19,12 @@ try
         %Setup função de activação da camada de saida
         net.layers{index+1}.transferFcn = convertConstants(activationFuntionOutput);
         
+        %Setup da função de treino
+        net.trainFcn =convertConstants(trainningFunction) ; 
+       
         net.trainParam.epochs = epochsNumber;
         
-        %Setup da função de treino
-        net.trainFcn =convertConstants(trainningFunction) ; %'traingd';
+      
         
         %Todos os exemplos são usados para treino
         if( trainningWeights(1)==100)
@@ -48,7 +51,7 @@ try
         %IMPRIMIR RESULTADOS
         outTest=-1;
         [ testAccuracy, globalAccuracy ]=   getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
-    elseif(strcmp(dataset,'Formas_2') || strcmp(dataset,'Formas_3') & loadfile==0)
+    elseif(strcmp(dataset,'Formas_2') || strcmp(dataset,'Formas_3') &&  strcmp(loadfile,'0'))
         %TREINAR A REDE
         [net,tr] = train(net, P, T);
         
@@ -71,13 +74,13 @@ try
     elseif(strcmp(dataset,'Formas_3'))
         clg = 'FORAM3'
         setupLoaded = load(loadfile);
-        
+        net =setupLoaded.net;
         if(treina==1)
-             clg1 = 'TREINO'
+            clg1 = 'TREINO'
             [net,tr] = train(net, P, T);
         else
-             clg2 = 'NAO TREINO'
-            net =setupLoaded.net;
+            clg2 = 'NAO TREINO'
+            
             tr =setupLoaded.tr;
             
         end
@@ -97,8 +100,10 @@ try
         
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
+        savetype=1;
     end
-    
+    if(savetype==0)
+        
     
     [code, setup] = saveConfiguration(activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc ,setupName, ExcelFileName, sheetNumber,testAccuracy,globalAccuracy, net,tr, P, T, TInput ,TTargets);
 catch ME
@@ -107,5 +112,6 @@ catch ME
     setup=ME.message;
     
 end
+
 end
 

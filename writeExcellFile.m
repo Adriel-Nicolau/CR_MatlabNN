@@ -1,4 +1,4 @@
-function [ output_args ] = writeExcellFile(setupName, workspacename , sheet , excelFileName )
+function [ code ] = writeExcellFile(setupName, workspacename , sheet , excelFileName )
 
 
 workspace = load(workspacename);
@@ -32,5 +32,7 @@ end
 G = [A B C D E F];
 
 xlswrite(excelFileName,G,sheet)
+ code = 200;
+
 end
 

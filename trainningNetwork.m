@@ -5,10 +5,9 @@ try
     length =length(2);
     TInput = [];
     TTargets =[];
-    treina
-    loadfile
+    savetype=0;
     resp =strcmp(loadfile,'0');
-    resp
+   
     if(treina==1 &&   strcmp(loadfile,'0'))
         net = feedforwardnet(neuroNumber);
         %Setup função de activação das camadas escondidas
@@ -20,10 +19,12 @@ try
         %Setup função de activação da camada de saida
         net.layers{index+1}.transferFcn = convertConstants(activationFuntionOutput);
         
+        %Setup da função de treino
+        net.trainFcn =convertConstants(trainningFunction) ; 
+       
         net.trainParam.epochs = epochsNumber;
         
-        %Setup da função de treino
-        net.trainFcn =convertConstants(trainningFunction) ; %'traingd';
+      
         
         %Todos os exemplos são usados para treino
         if( trainningWeights(1)==100)
@@ -99,10 +100,17 @@ try
         
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
+        savetype=1;
+       name= strcat(setupName,'_Loaded_',num2str(sheetNumber));
+  code= writeExcellFile(name,loadfile,sheetNumber, ExcelFileName);
+    setup='null';
     end
+    if(savetype==0)
+         [code, setup] = saveConfiguration(activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc ,setupName, ExcelFileName, sheetNumber,testAccuracy,globalAccuracy, net,tr, P, T, TInput ,TTargets);
+   end
     
     
-    [code, setup] = saveConfiguration(activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc ,setupName, ExcelFileName, sheetNumber,testAccuracy,globalAccuracy, net,tr, P, T, TInput ,TTargets);
+   
 catch ME
     disp(ME)
     code = 500;

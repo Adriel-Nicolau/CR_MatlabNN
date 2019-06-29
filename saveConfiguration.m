@@ -10,8 +10,8 @@ if exist(filename, 'file') == 2
 else
     % File does not exist.
     save(filename, 'activationFunctions', 'activationFuntionOutput', 'trainningFunction', 'epochsNumber', 'neuroNumber','trainningWeights','divFunc','testAccuracy','globalAccuracy','net','tr', 'P', 'T', 'TInput','TTargets');
-    writeExcellFile(setupName,filename,sheetNumber, ExcelFileName);
-    code = 200;
+    code =   writeExcellFile(setupName,filename,sheetNumber, ExcelFileName);
+   
 end
 
 setup = filename;
