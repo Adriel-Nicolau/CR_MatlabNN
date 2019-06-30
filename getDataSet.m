@@ -105,10 +105,10 @@ elseif(strcmp(dataset,'Formas_2') || strcmp(dataset,'Formas_3'))
         stars= imread(finalPathStar);
         triangles= imread(finalPathTriangle);
         %resize images
-        resizeImgCircle = imresize(cirlces, 0.5);
-        resizeImgSquare = imresize(squares, 0.5);
-        resizeImgStar = imresize(stars, 0.5);
-        resizeImgTriangle = imresize(triangles, 0.5);
+        resizeImgCircle = imresize(cirlces, [64 NaN]);
+        resizeImgSquare = imresize(squares, [64 NaN]);
+        resizeImgStar = imresize(stars, [64 NaN]);
+        resizeImgTriangle = imresize(triangles, [64 NaN]);
         %tranforming images  to binary matrix
         CircleBW = im2bw(resizeImgCircle,0.5);
         SquareBW = im2bw(resizeImgSquare,0.5);
