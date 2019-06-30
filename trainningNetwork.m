@@ -1,4 +1,4 @@
-function [ code , setup ] = trainningNetwork( activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc,setupName,ExcelFileName, sheetNumber,dataset,treina,loadfile)
+function [ code , setup , testAccuracy, globalAccuracy ] = trainningNetwork( activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc,setupName,ExcelFileName, sheetNumber,dataset,treina,loadfile)
 try
     globalAccuracy=0;
     length = size(activationFunctions);
@@ -7,7 +7,7 @@ try
     TTargets =[];
     savetype=0;
     resp =strcmp(loadfile,'0');
-   
+    
     if(treina==1 &&   strcmp(loadfile,'0'))
         net = feedforwardnet(neuroNumber);
         %Setup função de activação das camadas escondidas
@@ -20,11 +20,11 @@ try
         net.layers{index+1}.transferFcn = convertConstants(activationFuntionOutput);
         
         %Setup da função de treino
-        net.trainFcn =convertConstants(trainningFunction) ; 
-       
+        net.trainFcn =convertConstants(trainningFunction) ;
+        
         net.trainParam.epochs = epochsNumber;
         
-      
+        
         
         %Todos os exemplos são usados para treino
         if( trainningWeights(1)==100)
@@ -49,6 +49,7 @@ try
         disp(outTrain>0.5)
         
         %IMPRIMIR RESULTADOS
+        plotperf(tr)
         outTest=-1;
         [ testAccuracy, globalAccuracy ]=   getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
     elseif(strcmp(dataset,'Formas_2') || strcmp(dataset,'Formas_3') &&  strcmp(loadfile,'0'))
@@ -57,8 +58,6 @@ try
         
         % SIMULAR
         outTrain = sim(net, P);
-        
-        %disp(outTrain>0.5)
         
         %VISUALIZAR DESEMPENHO
         plotconfusion(T, outTrain) % Matriz de confusao
@@ -72,17 +71,13 @@ try
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
     elseif(strcmp(dataset,'Formas_3'))
-        clg = 'FORAM3'
+        
         setupLoaded = load(loadfile);
         net =setupLoaded.net;
         if(treina==1)
-            clg1 = 'TREINO'
             [net,tr] = train(net, P, T);
         else
-            clg2 = 'NAO TREINO'
-            
             tr =setupLoaded.tr;
-            
         end
         % SIMULAR
         outTrain = sim(net, P);
@@ -97,20 +92,31 @@ try
         TInput = P(:, tr.testInd);
         TTargets = T(:, tr.testInd);
         outTest = sim(net, TInput);
-        
+        plotconfusion(T, outTrain) % Matriz de confusao
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
         savetype=1;
-       name= strcat(setupName,'_Loaded_',num2str(sheetNumber));
-  code= writeExcellFile(name,loadfile,sheetNumber, ExcelFileName);
-    setup='null';
+        name= strcat(setupName,'_Loaded_',num2str(sheetNumber));
+        code= writeExcellFile(name,loadfile,sheetNumber, ExcelFileName);
+        setup='null';
+        
+        setupsavedname =  strcat('./save/',name,'.mat');
+        
+        activationFunctions = setupLoaded.activationFunctions
+        activationFuntionOutput =setupLoaded.activationFuntionOutput
+        trainningFunction = setupLoaded.trainningFunction
+        epochsNumber=setupLoaded.epochsNumber
+        neuroNumber=setupLoaded.neuroNumber
+        trainningWeights=setupLoaded.trainningWeights
+        divFunc=setupLoaded.divFunc
+        save(setupsavedname,'net' , 'tr','activationFunctions', 'activationFuntionOutput','trainningFunction', 'epochsNumber' ,'neuroNumber', 'trainningWeights','divFunc');
     end
     if(savetype==0)
-         [code, setup] = saveConfiguration(activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc ,setupName, ExcelFileName, sheetNumber,testAccuracy,globalAccuracy, net,tr, P, T, TInput ,TTargets);
-   end
+        [code, setup] = saveConfiguration(activationFunctions, activationFuntionOutput,trainningFunction, epochsNumber ,neuroNumber, trainningWeights,divFunc ,setupName, ExcelFileName, sheetNumber,testAccuracy,globalAccuracy, net,tr, P, T, TInput ,TTargets);
+    end
     
     
-   
+    
 catch ME
     disp(ME)
     code = 500;

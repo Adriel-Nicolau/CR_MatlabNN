@@ -1,6 +1,5 @@
 function [ testAccuracy, globalAccuracy] = getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T)
-outTrain
-outTest
+
 %Calcula e mostra a percentagem de classificacoes corretas no conjunto de teste
 r=0;
 for i=1:size(outTrain,2)               % Para cada classificacao

@@ -1,0 +1,31 @@
+function [ testAccuracy, globalAccuracy  ] = imageRecognize( image, setup )
+
+pathSetup = strcat('./save/', setup);
+imageSelected = imread(image);
+imageBW = im2bw(imageSelected,0.5);
+reshape(imageBW,1,[]);
+%transpose(circleBW);
+imageBWMatrixLine = reshape(imageBW.',1,[]);
+
+P =  [imageBWMatrixLine]';
+ % SIMULAR
+        outTrain = sim(net, P);
+
+setupLoaded = load(pathSetup);
+net =setupLoaded.net;
+tr =setupLoaded.tr;
+T=[];
+tr.testInd
+tr.testInd
+% % SIMULAR A REDE APENAS NO CONJUNTO DE TESTE
+% TInput = P(:, tr.testInd);
+% TTargets = T(:, tr.testInd);
+% outTest = sim(net, P);
+% 
+% %IMPRIMIR RESULTADOS
+% [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
+
+
+
+end
+

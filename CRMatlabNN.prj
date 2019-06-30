@@ -1,6 +1,6 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="3430020998" file="C:\Users\adrie\Desktop\CR1819\TrabPratico\work\Main.prj" location="C:\Users\adrie\Desktop\CR1819\TrabPratico\work" name="Main" target="target.mlapps" target-name="Package App">
-    <param.appname>Main</param.appname>
+  <configuration build-checksum="2464251405" file="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN\CRMatlabNN.prj" location="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN" name="CRMatlabNN" target="target.mlapps" target-name="Package App">
+    <param.appname>CRMatlabNN</param.appname>
     <param.authnamewatermark>Adriel Nicolau</param.authnamewatermark>
     <param.email />
     <param.company />
@@ -9,12 +9,12 @@
     <param.summary />
     <param.description />
     <param.screenshot />
-    <param.version>1.0</param.version>
+    <param.version>1.1</param.version>
     <param.products.name />
     <param.products.id />
     <param.products.version />
     <param.platforms />
-    <param.output>C:\Users\adrie\Desktop\CR1819\TrabPratico\work</param.output>
+    <param.output>C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN</param.output>
     <param.guid>68904b44-46d3-40c8-8df0-511079aab0c9</param.guid>
     <unset>
       <param.email />
@@ -24,7 +24,6 @@
       <param.summary />
       <param.description />
       <param.screenshot />
-      <param.version />
       <param.products.name />
       <param.products.id />
       <param.products.version />
@@ -36,14 +35,17 @@
     </fileset.main>
     <fileset.depfun>
       <file>${PROJECT_ROOT}\convertConstants.m</file>
-      <file>${PROJECT_ROOT}\getInputsTrainnig.m</file>
+      <file>${PROJECT_ROOT}\getDataSet.m</file>
+      <file>${PROJECT_ROOT}\getTrainAndGlobalAccuracy.m</file>
+      <file>${PROJECT_ROOT}\imageRecognize.m</file>
       <file>${PROJECT_ROOT}\saveConfiguration.m</file>
       <file>${PROJECT_ROOT}\trainningNetwork.m</file>
+      <file>${PROJECT_ROOT}\writeExcellFile.m</file>
     </fileset.depfun>
     <fileset.resources />
     <fileset.package />
     <build-deliverables>
-      <file location="C:\Users\adrie\Desktop\CR1819\TrabPratico" name="work" optional="false">C:\Users\adrie\Desktop\CR1819\TrabPratico\work</file>
+      <file location="C:\Users\adrie\Documents\MyProjects\ISEC" name="CR_MatlabNN" optional="false">C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN</file>
     </build-deliverables>
     <workflow />
     <matlab>

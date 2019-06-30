@@ -23,7 +23,6 @@ if(strcmp(dataset,'Formas_1'))
     triangleBW = im2bw(resizeTriangle,0.5);
     %figure, imshow(circleBW), figure, imshow(squareBW), figure, imshow(starBW),figure, imshow(triangleBW)
     
-    
     reshape(circleBW,1,[]);
     %transpose(circleBW);
     circleBWMatrixLine = reshape(circleBW.',1,[]);
