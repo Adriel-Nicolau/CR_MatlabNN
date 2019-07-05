@@ -11,17 +11,17 @@ if(strcmp(dataset,'Formas_1'))
     triangleImg = imread('./Formas_1/0_triangle.png');
    
     %resize images
-    resizeCircle = imresize(circleImg, 0.5);
-    resizeSquare = imresize(squareImg, 0.5);
-    resizeStar = imresize(starImg, 0.5);
-    resizeTriangle = imresize(triangleImg, 0.5);
+    resizeCircle = imresize(circleImg,  [64 NaN]);
+    resizeSquare = imresize(squareImg,  [64 NaN]);
+    resizeStar = imresize(starImg, [64 NaN]);
+    resizeTriangle = imresize(triangleImg, [64 NaN]);
     
     %tranforming images  to binary matrix
     circleBW = im2bw(resizeCircle,0.5);
     squareBW = im2bw(resizeSquare,0.5);
     starBW = im2bw(resizeStar,0.5);
     triangleBW = im2bw(resizeTriangle,0.5);
-    %figure, imshow(circleBW), figure, imshow(squareBW), figure, imshow(starBW),figure, imshow(triangleBW)
+   % figure, imshow(circleBW), figure, imshow(squareBW), figure, imshow(starBW),figure, imshow(triangleBW)
     
     reshape(circleBW,1,[]);
     %transpose(circleBW);

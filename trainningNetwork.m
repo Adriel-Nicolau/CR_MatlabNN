@@ -6,10 +6,13 @@ try
     TInput = [];
     TTargets =[];
     savetype=0;
-    resp =strcmp(loadfile,'0');
+  
     
     if(treina==1 &&   strcmp(loadfile,'0'))
         net = feedforwardnet(neuroNumber);
+        %Setup da função de treino
+        net.trainFcn =convertConstants(trainningFunction) ; 
+        
         %Setup função de activação das camadas escondidas
         for index=1:length
             func =convertConstants(activationFunctions(index));
@@ -19,8 +22,7 @@ try
         %Setup função de activação da camada de saida
         net.layers{index+1}.transferFcn = convertConstants(activationFuntionOutput);
         
-        %Setup da função de treino
-        net.trainFcn =convertConstants(trainningFunction) ;
+       
         
         net.trainParam.epochs = epochsNumber;
         
@@ -67,7 +69,8 @@ try
         TInput = P(:, tr.testInd);
         TTargets = T(:, tr.testInd);
         outTest = sim(net, TInput);
-        
+        OI ='aaa';
+        OI
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
     elseif(strcmp(dataset,'Formas_3'))
@@ -82,8 +85,8 @@ try
         % SIMULAR
         outTrain = sim(net, P);
         
-        %disp(outTrain>0.5)
-        
+        T = table(disp(outTrain>0.5));
+        writetable(T,'myData.xls');
         %VISUALIZAR DESEMPENHO
         plotconfusion(T, outTrain) % Matriz de confusao
         plotperf(tr)         % Grafico com o desempenho da rede nos 3 conjuntos
