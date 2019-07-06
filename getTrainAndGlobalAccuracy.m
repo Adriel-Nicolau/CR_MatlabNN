@@ -2,6 +2,7 @@ function [ testAccuracy, globalAccuracy] = getTrainAndGlobalAccuracy(outTrain, o
 
 %Calcula e mostra a percentagem de classificacoes corretas no conjunto de teste
 r=0;
+if(outTrain~=-1)
 for i=1:size(outTrain,2)               % Para cada classificacao
     [~, b] = max(outTrain(:,i));          %b guarda a linha onde encontrou valor mais alto da saida obtida
     [~, d]  = max(T(:,i));  %d guarda a linha onde encontrou valor mais alto da saida desejada
@@ -11,6 +12,9 @@ for i=1:size(outTrain,2)               % Para cada classificacao
 end
 globalAccuracy = r/size(outTrain,2)*100;
 fprintf('Precisao global %f\n', globalAccuracy)
+else
+    globalAccuracy = '-';
+end
 if(outTest~=-1)
     %Calcula e mostra a percentagem de classificacoes corretas no conjunto de teste
     r=0;
