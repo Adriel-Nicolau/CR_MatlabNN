@@ -1,7 +1,7 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="2464251405" file="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN\CRMatlabNN.prj" location="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN" name="CRMatlabNN" target="target.mlapps" target-name="Package App">
-    <param.appname>CRMatlabNN</param.appname>
-    <param.authnamewatermark>Adriel Nicolau</param.authnamewatermark>
+  <configuration build-checksum="1405686181" file="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN\RedeNN.prj" location="C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN" name="RedeNN" target="target.mlapps" target-name="Package App">
+    <param.appname>RedeNN</param.appname>
+    <param.authnamewatermark />
     <param.email />
     <param.company />
     <param.icon />
@@ -9,14 +9,15 @@
     <param.summary />
     <param.description />
     <param.screenshot />
-    <param.version>1.1</param.version>
+    <param.version>1.3</param.version>
     <param.products.name />
     <param.products.id />
     <param.products.version />
     <param.platforms />
     <param.output>C:\Users\adrie\Documents\MyProjects\ISEC\CR_MatlabNN</param.output>
-    <param.guid>68904b44-46d3-40c8-8df0-511079aab0c9</param.guid>
+    <param.guid>83a3c401-88c0-4c87-b968-c9d18706d527</param.guid>
     <unset>
+      <param.authnamewatermark />
       <param.email />
       <param.company />
       <param.icon />

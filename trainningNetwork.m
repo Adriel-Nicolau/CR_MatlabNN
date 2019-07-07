@@ -6,7 +6,8 @@ try
     TInput = [];
     TTargets =[];
     savetype=0;
-    
+    testAccuracy='-';
+    globalAccuracy='-';
     
     if(treina==1 &&   strcmp(loadfile,'0'))
         net = feedforwardnet(neuroNumber);
@@ -21,13 +22,7 @@ try
         
         %Setup função de activação da camada de saida
         net.layers{index+1}.transferFcn = convertConstants(activationFuntionOutput);
-        
-        
-        
         net.trainParam.epochs = epochsNumber;
-        
-        
-        
         %Todos os exemplos são usados para treino
         if( trainningWeights(1)==100)
             net.divideFcn = '';
@@ -78,32 +73,36 @@ try
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
     elseif(strcmp(dataset,'Formas_3'))
         outTrain=-1;
+        outTest=-1;
         setupLoaded = load(loadfile);
         net =setupLoaded.net;
+    
         if(treina==1)
             [net,tr] = train(net, P, T);
             % SIMULAR
-        outTrain = sim(net, P);
+            outTrain = sim(net, P);
             %VISUALIZAR DESEMPENHO
-        plotconfusion(T, outTrain) % Matriz de confusao
-        name=   strcat('./outputImg/',setupName,'_',dataset,'_Train_plotconfusion.png');
-        saveas(gcf,name)
-        plotperf(tr)         % Grafico com o desempenho da rede nos 3 conjuntos
-        name= strcat('./outputImg/',setupName,'_',dataset,'_Train_performance.png');
-        saveas(gcf,name)
+            % Matriz de confusao
+            plotconfusion(T, outTrain)
+            saveas(gcf,strcat('./outputImg/',setupName,'_',dataset,'_Train_plotconfusion.png'));
+            % Grafico com o desempenho da rede nos 3 conjuntos
+            plotperf(tr)
+            saveas(gcf,strcat('./outputImg/',setupName,'_',dataset,'_Train_performance.png'));
+            % SIMULAR A REDE APENAS NO CONJUNTO DE TESTE
+            TInput = P(:, tr.testInd);
+            TTargets = T(:, tr.testInd);
+      
+            outTest = sim(net, TInput);
         else
             tr =setupLoaded.tr;
+            outTrain = sim(net, P);
+            plotconfusion(T, outTrain)
+            saveas(gcf,strcat('./outputImg/',setupName,'_',dataset,'_Train_plotconfusion.png'));
         end
-    
-        % SIMULAR A REDE APENAS NO CONJUNTO DE TESTE
-        TInput = P(:, tr.testInd);
-        TTargets = T(:, tr.testInd);
-        outTest = sim(net, TInput);
-        plotconfusion(T, outTest) % Matriz de confusao
-        name=   strcat('./outputImg/',setupName,'_',dataset,'_Test_plotconfusion.png');
-         saveas(gcf,name)
+        
         %IMPRIMIR RESULTADOS
         [ testAccuracy, globalAccuracy ]= getTrainAndGlobalAccuracy(outTrain, outTest ,TTargets,tr,T);
+
         savetype=1;
         name= strcat(setupName,'_Loaded_',num2str(sheetNumber));
         code= writeExcellFile(name,loadfile,sheetNumber, ExcelFileName);

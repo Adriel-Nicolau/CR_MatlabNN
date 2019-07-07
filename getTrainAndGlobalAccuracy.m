@@ -15,6 +15,7 @@ fprintf('Precisao global %f\n', globalAccuracy)
 else
     globalAccuracy = '-';
 end
+
 if(outTest~=-1)
     %Calcula e mostra a percentagem de classificacoes corretas no conjunto de teste
     r=0;
